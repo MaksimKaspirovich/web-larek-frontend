@@ -1,9 +1,9 @@
-export interface IProductItem {// взаимодействие с API для карточек товара
-    id: string;
+export interface IProductItem {
+    readonly id: string;
     descriptions: string; 
     image: string;
     title: string;
-    catergory: string;
+    category: string;
     price: number | null;
 }
 
@@ -12,10 +12,10 @@ export interface IBasket {
     total: number;
 }
 
-export type PaymentMEthod = 'cash' | 'card';
+export type PaymentMethod = 'cash' | 'card';
 
-export interface IOrder { // взаимодействие с API для формы заказа
-    payment: PaymentMEthod;
+export interface IOrder {
+    payment: PaymentMethod;
     email: string;
     phone: string;
     address: string;
@@ -23,10 +23,14 @@ export interface IOrder { // взаимодействие с API для форм
     items: string[];
 }
 
-export type IOrderForm = Pick<IOrder, 'payment' | 'address'>;
-export type IOrderContacts = Pick<IOrder, 'phone' | 'email'>
+export type IOrderForm = Omit<IOrder, 'total' | 'items'>;
 
-export interface IOrderResult {
-    id: string;
+export type FormErrors = Partial<Record<keyof IOrderForm, string>>;
+
+export type IOrderPayment = Pick<IOrderForm, 'payment' | 'address'>;
+export type IOrderDelivery = Pick<IOrderForm, 'phone' | 'email'>
+
+export interface ISuccessOrder {
+    readonly id: string;
     total: number;
 }
