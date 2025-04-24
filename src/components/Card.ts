@@ -24,7 +24,7 @@ export class Card extends Component<IProductItem> {
 		this._category = container.querySelector('.card__category') || undefined;
 		this._price = container.querySelector('.card__price') || undefined;
 		this._button = container.querySelector('.card__button') || undefined;
-
+	
 		if (actions?.onClick) {
 			if (this._button) {
 				this._button.addEventListener('click', actions.onClick);
@@ -63,7 +63,7 @@ export class Card extends Component<IProductItem> {
 			this.setText(this._price, value ? `${value} синапсов` : 'Бесценно');
 		}
 		if (this._button) {
-			this._button.disabled = !value;
+			this.setDisabled(this._button, !value);
 		}
 	}
 
@@ -77,12 +77,12 @@ export class Card extends Component<IProductItem> {
 		// Очищаем предыдущие классы категории
 		this._category.className = 'card__category';
 		// Добавляем базовый класс (на случай, если он был удален)
-		this._category.classList.add('card__category');
+		this.toggleClass(this._category, 'card__category', true);
 
 		this.setText(this._category, value);
 		const categoryClass = cardCategory.get(value);
 		if (categoryClass) {
-			this._category.classList.add(`card__category_${categoryClass}`);
+			this.toggleClass(this._category, `card__category_${categoryClass}`, true);
 		}
 	}
 

@@ -32,17 +32,24 @@ export class Basket extends Component<IBasketView> {
 	}
 
 	set items(items: HTMLElement[]) {
-		if (items.length) {
-			this._list.replaceChildren(...items);
-		} else {
-			this._list.replaceChildren(
-				createElement<HTMLParagraphElement>('p', {
-					textContent: 'Корзина пуста',
-				})
-			);
-		}
-		this.selected = items.map((item) => item.dataset.id);
-	}
+        if (items.length) {
+            // Добавляем нумерацию к каждому элементу
+            items.forEach((item, index) => {
+                const numberElement = item.querySelector('.basket__item-index');
+                if (numberElement) {
+                    numberElement.textContent = (index + 1).toString();
+                }
+            });
+            this._list.replaceChildren(...items);
+        } else {
+            this._list.replaceChildren(
+                createElement<HTMLParagraphElement>('p', {
+                    textContent: 'Корзина пуста',
+                })
+            );
+        }
+        this.selected = items.map((item) => item.dataset.id);
+    }
 
 	set selected(items: string[]) {
 		this._selected = items;
