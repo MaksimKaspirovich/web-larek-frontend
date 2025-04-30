@@ -194,4 +194,8 @@ events.on('contacts:submit', () => {
 });
 
 // Получаем карточки с сервера
-api.getProductList().then(appData.setItems.bind(appData)).catch(console.error);
+api.getProductList()
+	.then(
+		appData.setItems.bind(appData)
+	)
+	.catch(console.error);
